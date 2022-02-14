@@ -21,6 +21,7 @@
 WindowManager:
     MainWindow:
     CameraWindow:
+    DataProcessingWindow:
 
 
 
@@ -119,5 +120,11 @@ WindowManager:
                     PopMatrix
             Button:
                 text:"Capture"
-                on_release : xcamera.shoot(app.rollNo)
+                on_release : 
+                    xcamera.shoot(app.rollNo)
+                    app.root.current = "alert"
+                    root.manager.transition.direction = "right"
+
                 size_hint : 0.2,0.2
+<DataProcessingWindow>:
+    name :"alert"

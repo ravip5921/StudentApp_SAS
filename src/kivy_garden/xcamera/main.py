@@ -104,7 +104,8 @@ class CameraWindow(Screen):
 
     pass
 
-
+class DataProcessingWindow(Screen):
+    pass
 class WindowManager(ScreenManager):
     pass
 

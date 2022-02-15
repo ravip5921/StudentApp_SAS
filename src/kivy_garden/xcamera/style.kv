@@ -17,12 +17,18 @@
 #:set labelH 0.15
 #:set labelW 0.4
 
+#:set angleV -90
+#app.root is WindowManager
                 
 WindowManager:
     MainWindow:
+        id:main
     CameraWindow:
+        id:camera
     DataProcessingWindow:
+        id:datap
     AlertWindow:
+        id:alert
 
 
 
@@ -67,15 +73,17 @@ WindowManager:
                     root.stdRoll.process(app,tinp)
                     app.root.current = "camera"
                     root.manager.transition.direction = "left"
-            
+                    app.root.ids.camera.setIndex()
                 
 
                 
 <CameraWindow>:
     name:"camera"
+    id:camera
     BoxLayout:
         orientation : 'vertical'
         rows : 2
+        id : "outerBox"
         BoxLayout:
             size : 200,200
             orientation : 'horizontal'
@@ -102,11 +110,13 @@ WindowManager:
                     on_release:
                         app.root.current = "main"
                         root.manager.transition.direction = "right"
+                        
         BoxLayout:
             orientation:'vertical'
             XCamera:
                 id:xcamera
-                index:1 if app.platform_android else 0
+                
+                #index: 0
                 resolution: (640,480)
                 play: True
                 size_hint: 1,1
@@ -115,7 +125,7 @@ WindowManager:
                 canvas.before:
                     PushMatrix
                     Rotate:
-                        angle: -90 if app.platform_android else 90
+                        angle: angleV 
                         origin: self.center
                 canvas.after:
                     PopMatrix

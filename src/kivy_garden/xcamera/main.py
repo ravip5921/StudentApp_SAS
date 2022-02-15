@@ -99,7 +99,14 @@ class MainWindow(Screen):
 class CameraWindow(Screen):
     # def picture_taken(self, obj, filename):
     #     print('Picture taken and saved to {}'.format(filename))
-
+    def setIndex(self):
+        if is_android():
+            self.ids.xcamera.index = 1
+            
+        else:
+            self.ids.xcamera.index = 0
+            # self.ids.xcamera.canvas.before.rotate.angle = 0
+        print("hi")
     pass
 
 class DataProcessingWindow(Screen):

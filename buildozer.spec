@@ -38,9 +38,10 @@ version.filename = %(source.dir)s/kivy_garden/xcamera/version.py
 # comma separated e.g. requirements = sqlite3,kivy
 requirements =
     android,
-    kivy==00034a5,
-    python3
-
+    kivy,
+    python3,
+    opencv
+#kivy==00034a5,
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
 # requirements.source.kivy = ../../kivy

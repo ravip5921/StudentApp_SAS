@@ -106,8 +106,8 @@ WindowManager:
             orientation:'vertical'
             XCamera:
                 id:xcamera
-                index:0
-                resolution: (1920,1080)
+                index:1 if app.platform_android else 0
+                resolution: (640,480)
                 play: True
                 size_hint: 1,1
                 allow_stretch: True
@@ -115,7 +115,7 @@ WindowManager:
                 canvas.before:
                     PushMatrix
                     Rotate:
-                        angle: 90
+                        angle: -90 if app.platform_android else 90
                         origin: self.center
                 canvas.after:
                     PopMatrix

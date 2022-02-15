@@ -116,6 +116,7 @@ kv = Builder.load_file("style.kv")
 class StudentApp(App):
     rollNo = ""
     saveSuccess = False
+    platform_android = is_android()
     def build(self):
         @mainthread
         def on_permissions_callback(permissions, grant_results):    

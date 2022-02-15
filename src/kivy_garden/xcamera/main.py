@@ -50,6 +50,35 @@ def check_request_camera_permission(callback=None):
         Logger.info("CameraAndroid: Camera permission granted.")
     return had_permission
 
+def check_write_permission():
+    """
+    Android runtime `WRITE` permission check.
+    """
+    if not is_android():
+        return True
+    from android.permissions import Permission, check_permission
+    permission = Permission.WRITE_EXTERNAL_STORAG
+    return check_permission(permission)
+
+
+def check_request_write_permission(callback=None):
+    """
+    Android runtime `CAMERA` permission check & request.
+    """
+    had_permission = check_write_permission()
+    Logger.info("WriteAndroid: WRITE permission {%s}.", had_permission)
+    if not had_permission:
+        Logger.info("WriteAndroid: WRITE permission was denied.")
+        Logger.info("WriteAndroid: Requesting WRITE permission.")
+        from android.permissions import Permission, request_permissions
+        permissions = [Permission.WRITE_EXTERNAL_STORAG]
+        request_permissions(permissions, callback)
+        had_permission = check_write_permission()
+        Logger.info("WriteAndroid: Returned WRITE permission {%s}.", had_permission)
+    else:
+        Logger.info("WriteAndroid: WRITE permission granted.")
+    return had_permission
+
 
 perm_denied = '''
 BoxLayout:

@@ -22,6 +22,7 @@ WindowManager:
     MainWindow:
     CameraWindow:
     DataProcessingWindow:
+    AlertWindow:
 
 
 
@@ -122,9 +123,26 @@ WindowManager:
                 text:"Capture"
                 on_release : 
                     xcamera.shoot(app.rollNo)
-                    app.root.current = "alert"
-                    root.manager.transition.direction = "right"
+                    app.root.current = "datap" if app.saveSuccess else "alert"
+                    root.manager.transition.direction = "left"
 
                 size_hint : 0.2,0.2
 <DataProcessingWindow>:
+    name :"datap"
+    AnchorLayout:
+
+        anchor_x :'right'
+        anchor_y :'top'
+                    
+        Button:
+            id: "back-btn"
+            text: "Go Back"
+            size_hint : [None,None]
+            size : [smallButW,smallButH]
+            on_release:
+                app.root.current = "camera"
+                root.manager.transition.direction = "right"
+                
+
+<AlertWindow>:
     name :"alert"

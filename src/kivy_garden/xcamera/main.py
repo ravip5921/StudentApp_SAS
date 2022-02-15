@@ -79,10 +79,10 @@ class RollNoInput(Widget):
     def getPlaceHolder(self):
         return self.field_placeholder
 
-    def process(self, App,txt):
+    def process(self, app,txt):
         if txt.text != "":
             # self.text = txt.text
-            App.rollNo = txt.text
+            app.rollNo = txt.text
             # print(self.text)
         else:
             print("text empty")
@@ -106,6 +106,8 @@ class CameraWindow(Screen):
 
 class DataProcessingWindow(Screen):
     pass
+class AlertWindow(Screen):
+    pass
 class WindowManager(ScreenManager):
     pass
 
@@ -115,6 +117,7 @@ kv = Builder.load_file("style.kv")
 
 class StudentApp(App):
     rollNo = ""
+    saveSuccess = False
     def build(self):
         @mainthread
         def on_permissions_callback(permissions, grant_results):    
@@ -128,6 +131,7 @@ class StudentApp(App):
     
     def picture_taken(self, obj, filename):
         print('Picture taken and saved to {}'.format(filename))
+        self.saveSuccess = True
 
 def main():
     StudentApp().run()

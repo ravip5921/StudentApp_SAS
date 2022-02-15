@@ -17,7 +17,7 @@
 #:set labelH 0.15
 #:set labelW 0.4
 
-#:set angleV 90
+#:set angleV 0
 #app.root is WindowManager
                 
 WindowManager:
@@ -50,7 +50,7 @@ WindowManager:
         rows : 2
         
         BoxLayout:
-            columns: 3
+            columns: 4
             orientation : 'vertical'
             size_hint : 0.7,0.3
             Label:
@@ -74,6 +74,17 @@ WindowManager:
                     app.root.current = "camera"
                     root.manager.transition.direction = "left"
                     app.root.ids.camera.setIndex()
+            Button:
+                id: verifyRoll
+                name:"verifyRoll"
+                text : "Verify2"
+                
+                #size_hint : labelW,labelH
+                on_release: 
+                    root.stdRoll.process(app,tinp)
+                    app.root.current = "camera"
+                    root.manager.transition.direction = "left"
+                    app.root.ids.camera.setIndex2()
                 
 
                 

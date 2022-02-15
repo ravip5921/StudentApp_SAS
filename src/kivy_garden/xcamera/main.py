@@ -142,6 +142,15 @@ class CameraWindow(Screen):
             # self.ids.xcamera.canvas.before.rotate.angle = 0
         print("hi")
     pass
+    def setIndex2(self):
+        if is_android():
+            self.ids.xcamera.index = 0
+            
+        else:
+            self.ids.xcamera.index = 0
+            # self.ids.xcamera.canvas.before.rotate.angle = 0
+        print("hi")
+    pass
 
 class DataProcessingWindow(Screen):
     pass
@@ -157,6 +166,7 @@ kv = Builder.load_file("style.kv")
 class StudentApp(App):
     rollNo = ""
     saveSuccess = False
+    encodingsSuccess = False
     platform_android = is_android()
     encodingsData = None
     def build(self):
@@ -173,12 +183,31 @@ class StudentApp(App):
     def picture_taken(self, obj, filename):
         print('Picture taken and saved to {}'.format(filename))
         self.saveSuccess = True
+        # Extracting embeddings from captured image
 
-        imag = face_recognition.load_image_file(filename)
-        imag = cv2.cvtColor(imag, cv2.COLOR_BGR2RGB)
-        self.encodingsData = face_recognition.face_encodings(imag)[0]
-        print(self.encodingsData)
-        os.remove(filename)
+        # imag = face_recognition.load_image_file(filename)
+        # imag = cv2.cvtColor(imag, cv2.COLOR_BGR2RGB)
+        # self.encodingsData = face_recognition.face_encodings(imag)[0]
+        # if self.encodingsData:
+        #     self.encodingsSuccess = True
+        #     print(self.encodingsData)
+        # os.remove(filename)
+        try:
+            imag = face_recognition.load_image_file(filename)
+            imag = cv2.cvtColor(imag, cv2.COLOR_BGR2RGB)
+            self.encodingsData = face_recognition.face_encodings(imag)[0]
+    
+            self.encodingsSuccess = True
+            print(self.encodingsData)
+            os.remove(filename)
+        except Exception as e:
+            print("No face detected.")
+            print("error :",e)
+            os.remove(filename)
+            self.encodingsSuccess= False
+            self.encodingsData = None
+
+        
     def encodingsString(self):
         return str(self.encodingsData)
 

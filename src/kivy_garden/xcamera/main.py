@@ -81,7 +81,6 @@ class RollNoInput(Widget):
 
     def process(self, app,txt):
         if txt.text != "":
-            # self.text = txt.text
             app.rollNo = txt.text
             # print(self.text)
         else:
@@ -94,7 +93,6 @@ class MainWindow(Screen):
     stdRoll.field_id = ObjectProperty(None)
     stdRoll.field_text = 'Roll No:'
     stdRoll.field_placeholder = 'Enter Roll no:'
-    stdRoll.text = ""
     pass
 
 

@@ -1,5 +1,10 @@
 #!/usr/bin/env python
+from pickletools import read_unicodestring1
 import kivy
+
+import cv2
+import face_recognition
+import os
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.core.window import Window
@@ -153,6 +158,7 @@ class StudentApp(App):
     rollNo = ""
     saveSuccess = False
     platform_android = is_android()
+    encodingsData = None
     def build(self):
         @mainthread
         def on_permissions_callback(permissions, grant_results):    
@@ -167,6 +173,14 @@ class StudentApp(App):
     def picture_taken(self, obj, filename):
         print('Picture taken and saved to {}'.format(filename))
         self.saveSuccess = True
+
+        imag = face_recognition.load_image_file(filename)
+        imag = cv2.cvtColor(imag, cv2.COLOR_BGR2RGB)
+        self.encodingsData = face_recognition.face_encodings(imag)[0]
+        print(self.encodingsData)
+        os.remove(filename)
+    def encodingsString(self):
+        return str(self.encodingsData)
 
 def main():
     StudentApp().run()

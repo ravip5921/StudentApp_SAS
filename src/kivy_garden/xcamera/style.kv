@@ -135,6 +135,7 @@ WindowManager:
                     xcamera.shoot(app.rollNo)
                     app.root.current = "datap" if app.saveSuccess else "alert"
                     root.manager.transition.direction = "left"
+                    app.root.ids.datap.ids.successLabel.text = app.encodingsString()
 
                 size_hint : 0.2,0.2
 <DataProcessingWindow>:
@@ -152,7 +153,10 @@ WindowManager:
             on_release:
                 app.root.current = "camera"
                 root.manager.transition.direction = "right"
+        Label:
+            id : successLabel
                 
 
 <AlertWindow>:
     name :"alert"
+    

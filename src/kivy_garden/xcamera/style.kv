@@ -50,7 +50,7 @@ WindowManager:
         rows : 2
         
         BoxLayout:
-            columns: 4
+            columns: 6
             orientation : 'vertical'
             size_hint : 0.7,0.3
             Label:
@@ -62,6 +62,13 @@ WindowManager:
                 name :"tinp"
                 hint_text: root.stdRoll.field_placeholder
                 #size_hint : labelW,labelH
+            Label:
+                text: root.stdAcode.field_text
+            TextInput:
+                id: acodeinp
+                #name :"tinp"
+                hint_text: root.stdAcode.field_placeholder
+                #size_hint : labelW,labelH
                 
             Button:
                 id: verifyRoll
@@ -70,7 +77,7 @@ WindowManager:
                 
                 #size_hint : labelW,labelH
                 on_release: 
-                    root.stdRoll.process(app,tinp)
+                    root.stdRoll.process(app.rollNo,tinp)
                     app.root.current = "camera"
                     root.manager.transition.direction = "left"
                     app.root.ids.camera.setIndex()
@@ -81,7 +88,8 @@ WindowManager:
                 
                 #size_hint : labelW,labelH
                 on_release: 
-                    root.stdRoll.process(app,tinp)
+                    root.stdRoll.setRollNo(app,tinp)
+                    root.stdAcode.setACode(app,acodeinp)
                     app.root.current = "camera"
                     root.manager.transition.direction = "left"
                     app.root.ids.camera.setIndex2()
@@ -146,7 +154,8 @@ WindowManager:
                     xcamera.shoot(app.rollNo)
                     app.root.current = "datap" if app.saveSuccess else "alert"
                     root.manager.transition.direction = "left"
-                    app.root.ids.datap.ids.successLabel.text = app.encodingsString()
+                    root.setStatusLabel(app.root.ids.datap.ids.successLabel)
+                    # app.root.ids.datap.ids.successLabel.text = app.encodingsString()
 
                 size_hint : 0.2,0.2
 <DataProcessingWindow>:
@@ -166,6 +175,8 @@ WindowManager:
                 root.manager.transition.direction = "right"
         Label:
             id : successLabel
+            text : "Success!"
+            
                 
 
 <AlertWindow>:

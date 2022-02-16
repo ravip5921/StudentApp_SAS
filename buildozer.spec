@@ -40,7 +40,8 @@ requirements =
     android,
     kivy,
     python3,
-    opencv
+    opencv,
+    face_recognition
 #kivy==00034a5,
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes

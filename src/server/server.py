@@ -394,10 +394,10 @@ if __name__ == '__main__':
     attendancetimer.daemon = True
 
     # --test--
-    attendanceid = insertdb.insertAttendance(
-        "001", "CT652", "075bctCd")
-    active_attendance['075bctCd'] = ('001', 1, attendanceid)
-    students_present['075bctCd'] = []
+    # attendanceid = insertdb.insertAttendance(
+    #     "001", "CT652", "075bctCd")
+    # active_attendance['075bctCd'] = ('001', 1, attendanceid)
+    # students_present['075bctCd'] = []
 
     teacherlistener.start()  # listen and handle teacher clients
     studentlistener.start()  # listen and handle student clients
@@ -409,7 +409,6 @@ if __name__ == '__main__':
     # studentlistener.join()
     # attendancetimer.join()
     while True:
-        a = input()
-        if a == "q":
-
+        endServer = input()
+        if endServer == "q" or endServer =="Q":
             sys.exit()

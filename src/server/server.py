@@ -21,7 +21,7 @@ teacher_port = 60001
 dbinfo = {'host':'localhost',
            'user': 'root',
            'password': '',
-           'port': 3308,
+           'port': 3306,
            'database': 'sas'}
 
 ATTENDANCE_TIMEOUT = 10 * 60  #attendance closes automatically after 10 minutes if teacher doesn't close it

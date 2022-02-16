@@ -77,7 +77,8 @@ WindowManager:
                 
                 #size_hint : labelW,labelH
                 on_release: 
-                    root.stdRoll.process(app.rollNo,tinp)
+                    root.stdRoll.setRollNo(app,tinp)
+                    root.stdAcode.setACode(app,acodeinp)
                     app.root.current = "camera"
                     root.manager.transition.direction = "left"
                     app.root.ids.camera.setIndex()

@@ -3,6 +3,8 @@ import threading
 import random
 import sched
 import time
+import sys
+import numpy
 import face_recognition
 import mysql.connector
 
@@ -68,6 +70,10 @@ def studentHandler(conn):
     class_query = 'SELECT cID FROM student WHERE sID = "{}"'.format(
         data['sid'])
     # print("DGFD")
+    if data['face'] == None or len(data['face']) != 128:
+        response['error'] = 'Face data not supplied'
+        communication_json.convertSendClose(response, conn)
+        return
     try:
 
         mysqlconn, mycursor = connect2db()
@@ -111,9 +117,7 @@ def studentHandler(conn):
                     # *first check the student is registered for classid*
                     student_facedata_query = 'SELECT embedding FROM facedata WHERE sID = "{}" ORDER BY `index`'.format(
                         data['sid'])
-                    print("SQL not executed")
                     mycursor.execute(student_facedata_query)
-                    print("SQL executed")
                     result = mycursor.fetchall()
                     facedata = []
                     if len(result) == 0:
@@ -127,12 +131,12 @@ def studentHandler(conn):
                             facedata.append(res[0])
                         # compare facedata
                         match = face_recognition.compare_faces(
-                            facedata, data['face'])
+                            [numpy.array(facedata)], numpy.array(data['face']))
                         if match[0]:
                             # if face match then update
                             mark_attendance_query = 'UPDATE record SET presence = true WHERE aID = {}'.format(
                                 active_attendance[data['cid']][2])
-                            mycursor.execute(student_facedata_query)
+                            mycursor.execute(mark_attendance_query)
                             mysqlconn.commit()
                             # add student_id to students_present[];
                             students_present[data['cid']].append(data['sid'])
@@ -381,9 +385,13 @@ def classSubjectUpdater(conn):
 
 
 if __name__ == '__main__':
+
     teacherlistener = threading.Thread(target=teacherConnectionListen)
     studentlistener = threading.Thread(target=studentConnectionListen)
     attendancetimer = threading.Thread(target=attendanceTimeout)
+    teacherlistener.daemon = True
+    studentlistener.daemon = True
+    attendancetimer.daemon = True
 
     # --test--
     attendanceid = insertdb.insertAttendance(
@@ -397,6 +405,11 @@ if __name__ == '__main__':
     attendancetimer.start()
 
     # wait till all threads have returned
-    teacherlistener.join()
-    studentlistener.join()
-    attendancetimer.join()
+    # teacherlistener.join()
+    # studentlistener.join()
+    # attendancetimer.join()
+    while True:
+        a = input()
+        if a == "q":
+
+            sys.exit()

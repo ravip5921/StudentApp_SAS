@@ -8,8 +8,8 @@ attendance_server = {'host': '127.0.0.1', 'port': 60000}
 def markAttendance(student_id, acode, face_embd, _attendance_server=attendance_server):
     data = {}
     data['sid'] = student_id
-    data['acode'] = acode
-    data['face'] = face_embd
+    data['acode'] = int(acode)
+    data['face'] = [float(x) for x in face_embd]
     #convert the data to be sent into json format
     datastr = communication_json.convert2send(data)
     #print(datastr)

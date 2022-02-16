@@ -3,7 +3,7 @@ from pickletools import read_unicodestring1
 import kivy
 from numpy import datetime_data
 
-import server.client_student 
+import server.client_student
 import cv2
 import face_recognition
 import os
@@ -22,11 +22,13 @@ from kivy.properties import NumericProperty, ObjectProperty, StringProperty
 def is_android():
     return platform == 'android'
 
+
 if not is_android():
     Window.size = (540, 960)
 '''
 Runtime permissions:
 '''
+
 
 def check_camera_permission():
     """
@@ -52,7 +54,8 @@ def check_request_camera_permission(callback=None):
         permissions = [Permission.CAMERA]
         request_permissions(permissions, callback)
         had_permission = check_camera_permission()
-        Logger.info("CameraAndroid: Returned CAMERA permission {%s}.", had_permission)
+        Logger.info(
+            "CameraAndroid: Returned CAMERA permission {%s}.", had_permission)
     else:
         Logger.info("CameraAndroid: Camera permission granted.")
     return had_permission
@@ -103,6 +106,7 @@ BoxLayout:
 
 '''
 
+
 class RollNoInput(Widget):
     field_id = ObjectProperty(None)
     field_text = StringProperty(None)
@@ -115,13 +119,14 @@ class RollNoInput(Widget):
     def getPlaceHolder(self):
         return self.field_placeholder
 
-    def setRollNo(self, app,textIp):
+    def setRollNo(self, app, textIp):
         if textIp != "":
             app.rollNo = textIp.text
             # print("fhfgh",ipText)
         else:
             print("text empty")
-    def setACode(self, app,textIp):
+
+    def setACode(self, app, textIp):
         if textIp != "":
             app.acode = textIp.text
             # print("fhfgh",ipText)
@@ -148,28 +153,35 @@ class CameraWindow(Screen):
     def setIndex(self):
         if is_android():
             self.ids.xcamera.index = 1
-            
+
         else:
             self.ids.xcamera.index = 0
             # self.ids.xcamera.canvas.before.rotate.angle = 0
         # print("hi")
     pass
+
     def setIndex2(self):
         if is_android():
             self.ids.xcamera.index = 0
-            
+
         else:
             self.ids.xcamera.index = 0
             # self.ids.xcamera.canvas.before.rotate.angle = 0
         # print("hi")
     pass
-    def setStatusLabel(self,label):
+
+    def setStatusLabel(self, label):
         label.text = "done"
+
 
 class DataProcessingWindow(Screen):
     pass
+
+
 class AlertWindow(Screen):
     pass
+
+
 class WindowManager(ScreenManager):
     pass
 
@@ -184,17 +196,17 @@ class StudentApp(App):
     encodingsSuccess = False
     platform_android = is_android()
     encodingsData = None
+
     def build(self):
         @mainthread
-        def on_permissions_callback(permissions, grant_results):    
+        def on_permissions_callback(permissions, grant_results):
             if all(grant_results):
                 return kv
         if check_request_camera_permission(callback=on_permissions_callback):
             return kv
         else:
             return Builder.load_string(perm_denied)
-    
-    
+
     def picture_taken(self, obj, filename):
         print('Picture taken and saved to {}'.format(filename))
         self.saveSuccess = True
@@ -211,11 +223,12 @@ class StudentApp(App):
             imag = face_recognition.load_image_file(filename)
             imag = cv2.cvtColor(imag, cv2.COLOR_BGR2RGB)
             self.encodingsData = face_recognition.face_encodings(imag)[0]
-            self.encodingsData =  self.encodingsData.tolist()
+            self.encodingsData = self.encodingsData.tolist()
             self.encodingsSuccess = True
             # print(self.encodingsData)
             #  Send embeddings to server
-            dataFromServer = server.client_student.markAttendance(self.rollNo,self.acode,self.encodingsData)
+            dataFromServer = server.client_student.markAttendance(
+                self.rollNo, int(self.acode), self.encodingsData)
             if "error" in dataFromServer:
                 print(dataFromServer["error"])
             else:
@@ -224,17 +237,18 @@ class StudentApp(App):
             os.remove(filename)
         except Exception as e:
             print("No face detected.")
-            print("error :",e)
+            print("error :", e)
             os.remove(filename)
-            self.encodingsSuccess= False
+            self.encodingsSuccess = False
             self.encodingsData = None
 
-        
     def encodingsString(self):
         return str(self.encodingsData)
 
+
 def main():
     StudentApp().run()
+
 
 if __name__ == "__main__":
     main()

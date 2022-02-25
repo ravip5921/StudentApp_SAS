@@ -1,5 +1,6 @@
 import mysql.connector
 
+
 def createdb():
     host = 'localhost'
     user = 'root'
@@ -7,7 +8,6 @@ def createdb():
     port = 3306
     dbname = 'sas'
 
-    
     len_cid = 10
     len_cname = 20
     len_scode = 10
@@ -89,33 +89,33 @@ def createdb():
                                                 )ENGINE = InnoDB;'''.format(len_sid)
 
     table_queries = [table_classroom_query,
-             table_subject_query,
-             table_department_query,
-             table_teacher_query,
-             table_teaches_query,
-             table_student_query,
-             table_facedata_query,
-             table_attendance_query,
-             table_record_query]
+                     table_subject_query,
+                     table_department_query,
+                     table_teacher_query,
+                     table_teaches_query,
+                     table_student_query,
+                     table_facedata_query,
+                     table_attendance_query,
+                     table_record_query]
 
     try:
         mysqlconn = mysql.connector.connect(
-                            host = host,
-                            user = user,
-                            password = password,
-                            port = port)
+            host=host,
+            user=user,
+            password=password,
+            port=port)
         mysqlexecuter = mysqlconn.cursor()
         try:
-            print('Executing... ',db_query)
+            print('Executing... ', db_query)
             mysqlexecuter.execute(db_query)
         except mysql.connector.Error as e:
             print(e)
         try:
-            print('Executing... ',query_selectdb)
+            print('Executing... ', query_selectdb)
             mysqlexecuter.execute(query_selectdb)
             for query in table_queries:
                 try:
-                    print('Executing... ',query)
+                    print('Executing... ', query)
                     mysqlexecuter.execute(query)
                 except mysql.connector.Error as e:
                     print(e)
@@ -123,6 +123,7 @@ def createdb():
             print(e)
     except mysql.connector.Error as e:
         print(e)
+
 
 if __name__ == '__main__':
     createdb()

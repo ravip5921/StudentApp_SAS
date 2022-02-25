@@ -8,11 +8,13 @@
 </head>
 
 <body>
+    <nav class="navbar">
+        <div class="logo"><a href="departments.html">Smart Attendance</a></div>
+        <div class="logOut-btn"><a href="../index.html">Log Out</a></div>
+    </nav>
     <?php
     include 'connectToDb.php';
-
     $username = $_SESSION["username"];
-
     if (!$sqldb->select_db('sas')) 
     {
         die("not connected to database");
@@ -22,24 +24,21 @@
     {
         if (mysqli_num_rows($departments) > 0)
         {
-
             while ($departments_row = mysqli_fetch_assoc($departments)) 
             {
                 $dID = $departments_row['dID'];
-                $departName = $departments_row['name'];
-        
+                $departName = $departments_row['name'];       
                 ?>
-
                 <div class="bg-image">
                     <div class="card-holder">
-                    <div class="card">
-                        <div class="box">
-                            <a href="bct.php?dID=<?php echo $dID;?>" >
-                                <div class="text"><?php echo $departName?></div>                   
-                            </a>
+                        <div class="card">
+                            <div class="box">
+                                <a href="bct.php?dID=<?php echo $dID;?>" >
+                                    <div class="text"><?php echo $departName?></div>                   
+                                </a>
+                            </div>
                         </div>
                     </div>
-                
                 <?php
             }
         }
@@ -49,5 +48,14 @@
         echo "Error running fetch department query";
     }
 ?>
+</div>
+<footer>
+    <span class="text1">Created By</span> <br>
+    <span class="text2">Nikesh DC(PUL075BCT052) ,
+        Ravi Pandey(PUL075BCT065) ,
+        <br> Rohan Chhetry(PUL075BCT066) ,
+        Yukta Bansal (PUL075BCT096)</span>
+        <br> <span class="far fa-copyright"></span> <span class="text1">2022 All rights reserved.</span>
+</footer>
 </body>
 </html>

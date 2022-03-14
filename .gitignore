@@ -1,4 +1,4 @@
 .buildozer/
 *.jpg
-.vscode/
+.vscode/*
 */__pycache__/*

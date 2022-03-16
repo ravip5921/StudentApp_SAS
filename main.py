@@ -64,22 +64,33 @@ class StudentApp(MDApp):
 
                                   pos_hint={'x': 0.1, 'y': 0.1}
                                   )
+        inputLayout2 = MDBoxLayout(orientation="vertical",
+
+                                   pos_hint={'x': 0.1, 'y': 0.1}
+                                   )
 
         # setting text of roll no from saved file
         if filePresent:
             self.rollNoT.text = fileP.readline()
             fileP.close()
 
-        inputLayout.size_hint = (0.8, 0.5)
+        inputLayout.size_hint = (0.8, 0.25)
         inputLayout.md_bg_color = [0.328125, 0.31640625, 0.8359375, 1]
+
+        spacer = MDBoxLayout(size_hint=(1, 0.1))
+        inputLayout2.size_hint = (0.8, 0.25)
+        inputLayout2.md_bg_color = [0.328125, 0.31640625, 0.8359375, 1]
         # Adding widgets for input to input layout
         inputLayout.add_widget(MDLabel())
         inputLayout.add_widget(self.rollNoL)
         inputLayout.add_widget(self.rollNoT)
-        inputLayout.add_widget(MDLabel())
-        inputLayout.add_widget(self.AttendanceCodeL)
-        inputLayout.add_widget(self.AttendanceCodeT)
-        inputLayout.add_widget(MDLabel())
+        inputLayout2.add_widget(MDLabel())
+
+        # inputLayout.add_widget(MDLabel())
+        inputLayout2.add_widget(MDLabel())
+        inputLayout2.add_widget(self.AttendanceCodeL)
+        inputLayout2.add_widget(self.AttendanceCodeT)
+        inputLayout2.add_widget(MDLabel())
 
         # Message label
         self.messageL = MDLabel(
@@ -114,6 +125,8 @@ class StudentApp(MDApp):
         myBoxLayout.add_widget(imageLayout)
         myBoxLayout.add_widget(MDLabel(text=" ", size_hint=(1, 0.2)))
         myBoxLayout.add_widget(inputLayout)
+        myBoxLayout.add_widget(spacer)
+        myBoxLayout.add_widget(inputLayout2)
         myBoxLayout.add_widget(messageLayout)
         myBoxLayout.add_widget(cameraLayout)
         myBoxLayout.add_widget(self.buttonObj)

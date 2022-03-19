@@ -1,12 +1,10 @@
-from email import message
-from ssl import OP_NO_COMPRESSION
 import server.client_student
 
 
 import cv2
 import face_recognition
 import os
-from time import sleep
+
 
 from kivy.core.window import Window
 from kivymd.app import MDApp
@@ -195,6 +193,8 @@ class StudentApp(MDApp):
                     self.encodingsData = self.encodingsData.tolist()
                     # print(self.encodingsData)
                     #  Send embeddings to server
+
+                    self.rollNo.upper()
                     print(self.rollNo)
                     dataFromServer = server.client_student.markAttendance(
                         self.rollNo, int(self.acode), self.encodingsData)
